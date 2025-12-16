@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DiziPal Lite - Film & Dizi İzle</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- TEMEL AYARLAR --- */
+        :root {
+            --bg-body: #0e0e0e;
+            --bg-card: #1d1d1d;
+            --bg-header: rgba(12, 13, 15, 0.95);
+            --primary: #db2424; /* Dizipal Kırmızısı */
+            --text-main: #ffffff;
+            --text-muted: #a7a7a7;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 50px;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; padding: 0; margin: 0; }
+
+        /* --- HEADER --- */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: var(--bg-header);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #222;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -1px;
+        }
+        .logo span { color: var(--primary); }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { opacity: 1; color: var(--primary); }
+
+        .admin-btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: 0.3s;
+        }
+        .admin-btn:hover { background-color: #b01010; }
+
+        /* --- ANA İÇERİK --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            border-left: 4px solid var(--primary);
+            padding-left: 15px;
+            margin: 30px 0 20px 0;
+            font-weight: 700;
+        }
+
+        /* --- YATAY SCROLL (DİZİLER İÇİN) --- */
+        .scroll-wrapper {
+            position: relative;
+        }
+        
+        .scroll-container {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding-bottom: 15px;
+            scroll-behavior: smooth;
+        }
+        
+        .scroll-container::-webkit-scrollbar {
+            height: 8px;
+        }
+        .scroll-container::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        .card-horizontal {
+            min-width: 160px;
+            width: 160px;
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .card-horizontal:hover { transform: scale(1.05); z-index: 10; }
+
+        /* --- GRID LAYOUT (FİLMLER İÇİN) --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .card-vertical {
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+        }
+        .card-vertical:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+
+        /* --- KART DETAYLARI --- */
+        .card-img {
+            width: 100%;
+            aspect-ratio: 2/3;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 10px;
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 5px;
+        }
+
+        .card-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        /* --- PLAYER MODAL --- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .video-box {
+            width: 80%;
+            max-width: 900px;
+            aspect-ratio: 16/9;
+            background: #000;
+            box-shadow: 0 0 50px rgba(219, 36, 36, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .video-box iframe { width: 100%; height: 100%; border: none; }
+
+        .close-modal {
+            margin-top: 20px;
+            background: transparent;
+            border: 1px solid white;
+            color: white;
+            padding: 10px 30px;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: 0.3s;
+        }
+        .close-modal:hover { background: white; color: black; }
+
+        /* --- ADMIN MODAL --- */
+        .admin-panel {
+            background: #252525;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            border: 1px solid #333;
+        }
+
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; color: #ccc; margin-bottom: 5px; font-size: 0.9rem; }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            background: #333;
+            border: 1px solid #444;
+            color: white;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        
+        .row { display: flex; gap: 10px; }
+
+        .btn-save { background: var(--primary); color: white; width: 100%; padding: 12px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        .btn-cancel { background: #444; color: white; width: 100%; padding: 12px; border: none; border-radius: 5px; margin-top: 10px; cursor: pointer; }
+
+    </style>
+</head>
+<body>
+
+    <!-- ÜST MENÜ -->
+    <header>
+        <div class="logo">DİZİ<span>PAL</span></div>
+        <div class="nav-links">
+            <a href="#">Anasayfa</a>
+            <a href="#">Diziler</a>
+            <a href="#">Filmler</a>
+        </div>
+        <button class="admin-btn" onclick="openAdmin()"><i class="fas fa-plus"></i> İçerik Ekle</button>
+    </header>
+
+    <!-- ANA İÇERİK -->
+    <div class="container">
+        
+        <!-- Bölüm 1: Trend Diziler (Yatay Kaydırma) -->
+        <h2 class="section-title">Popüler Diziler & Yeni Bölümler</h2>
+        <div class="scroll-wrapper">
+            <div class="scroll-container" id="seriesList">
+                <!-- Javascript ile buraya diziler eklenecek -->
+            </div>
+        </div>
+
+        <!-- Bölüm 2: Son Eklenen Filmler (Grid) -->
+        <h2 class="section-title">Son Eklenen Filmler</h2>
+        <div class="grid-container" id="movieList">
+            <!-- Javascript ile buraya filmler eklenecek -->
+        </div>
+
+    </div>
+
+    <!-- PLAYER MODAL -->
+    <div class="modal" id="playerModal">
+        <div class="video-box">
+            <iframe id="videoFrame" src="" allowfullscreen></iframe>
+        </div>
+        <div style="color:white; margin-top:10px; font-size:1.2rem;" id="playerTitle"></div>
+        <button class="close-modal" onclick="closePlayer()">Kapat</button>
+    </div>
+
+    <!-- ADMIN MODAL -->
+    <div class="modal" id="adminModal" style="background: rgba(0,0,0,0.8);">
+        <div class="admin-panel">
+            <h3 style="margin-top:0; color:var(--primary);">İçerik Ekle</h3>
+            
+            <div class="form-group">
+                <label>Tür:</label>
+                <select id="cType" onchange="toggleSeriesFields()">
+                    <option value="movie">Film</option>
+                    <option value="series">Dizi</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>İsim:</label>
+                <input type="text" id="cTitle" placeholder="Örn: Hızlı ve Öfkeli / Breaking Bad">
+            </div>
+
+            <div class="row" id="seriesFields" style="display:none;">
+                <div class="form-group" style="flex:1">
+                    <label>Sezon:</label>
+                    <input type="number" id="cSeason" placeholder="1">
+                </div>
+                <div class="form-group" style="flex:1">
+                    <label>Bölüm:</label>
+                    <input type="number" id="cEpisode" placeholder="1">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Afiş Resmi (URL):</label>
+                <input type="text" id="cImage" placeholder="https://...">
+            </div>
+
+            <div class="form-group">
+                <label>Embed Linki (Video):</label>
+                <input type="text" id="cUrl" placeholder="https://vidmoly.net/embed-...">
+            </div>
+
+            <button class="btn-save" onclick="saveContent()">Yayınla</button>
+            <button class="btn-cancel" onclick="closeAdmin()">İptal</button>
+            <button class="btn-cancel" style="background: transparent; color:#666; font-size:0.8rem;" onclick="resetData()">Verileri Sıfırla</button>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA VE AYARLAR ---
+        const STORAGE_KEY = 'dizipal_lite_db_v2';
+
+        // Başlangıç Verileri (Boş görünmesin diye)
+        const defaultData = [
+            {
+                id: 1,
+                type: 'series',
+                title: 'Kısmetse Olur: Aşkın Gücü',
+                season: 1,
+                episode: 38,
+                image: 'https://file.cdnhipter.xyz/images/450/300/80//unnamed-1762521381.jpg',
+                url: 'https://vidmoly.net/embed-sgbj4itzs9fy.html'
+            },
+            {
+                id: 2,
+                type: 'series',
+                title: 'Gibi',
+                season: 4,
+                episode: 1,
+                image: 'https://images.cdnhipter.xyz/images/tv/brand/450/300/80/b47b8ee7uwkq5upa1162b07a5.jpg?v=3.645',
+                url: 'https://vidmoly.net/embed-sgbj4itzs9fy.html'
+            },
+            {
+                id: 3,
+                type: 'movie',
+                title: 'Oppenheimer',
+                image: 'https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg',
+                url: 'https://vidmoly.net/embed-sgbj4itzs9fy.html'
+            },
+            {
+                id: 4,
+                type: 'movie',
+                title: 'John Wick 4',
+                image: 'https://image.tmdb.org/t/p/w500/gh2bmprLtUQ8o87oj0ww8Mhzghk.jpg',
+                url: 'https://vidmoly.net/embed-sgbj4itzs9fy.html'
+            }
+        ];
+
+        // --- SAYFA YÜKLENİNCE ---
+        document.addEventListener('DOMContentLoaded', () => {
+            loadContent();
+        });
+
+        // --- İÇERİK YÖNETİMİ ---
+        function loadContent() {
+            let data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            if (!data) {
+                data = defaultData;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            }
+
+            const seriesContainer = document.getElementById('seriesList');
+            const movieContainer = document.getElementById('movieList');
+            
+            seriesContainer.innerHTML = '';
+            movieContainer.innerHTML = '';
+
+            // En son eklenen en başta görünsün
+            data.reverse().forEach(item => {
+                const imgUrl = item.image || 'https://via.placeholder.com/300x450?text=Resim+Yok';
+                
+                if (item.type === 'series') {
+                    // Dizi Kartı (Yatay)
+                    const card = document.createElement('div');
+                    card.className = 'card-horizontal';
+                    card.onclick = () => openPlayer(item.url, item.title + ` (S${item.season} B${item.episode})`);
+                    card.innerHTML = `
+                        <div class="badge">S${item.season}.B${item.episode}</div>
+                        <img src="${imgUrl}" class="card-img" onerror="this.src='https://via.placeholder.com/300x450'">
+                        <div class="card-content">
+                            <div class="card-title">${item.title}</div>
+                            <div class="card-meta">2 saat önce</div>
+                        </div>
+                    `;
+                    seriesContainer.appendChild(card);
+
+                } else {
+                    // Film Kartı (Dikey Grid)
+                    const card = document.createElement('div');
+                    card.className = 'card-vertical';
+                    card.onclick = () => openPlayer(item.url, item.title);
+                    card.innerHTML = `
+                        <div class="badge">HD Film</div>
+                        <img src="${imgUrl}" class="card-img" onerror="this.src='https://via.placeholder.com/300x450'">
+                        <div class="card-content">
+                            <div class="card-title">${item.title}</div>
+                            <div class="card-meta">
+                                <span>2024</span>
+                                <span><i class="fas fa-star" style="color:gold"></i> 7.5</span>
+                            </div>
+                        </div>
+                    `;
+                    movieContainer.appendChild(card);
+                }
+            });
+        }
+
+        // --- ADMIN FONKSİYONLARI ---
+        function openAdmin() {
+            document.getElementById('adminModal').style.display = 'flex';
+        }
+
+        function closeAdmin() {
+            document.getElementById('adminModal').style.display = 'none';
+            // Formu temizle
+            document.getElementById('cTitle').value = '';
+            document.getElementById('cImage').value = '';
+            document.getElementById('cUrl').value = '';
+            document.getElementById('cSeason').value = '';
+            document.getElementById('cEpisode').value = '';
+        }
+
+        function toggleSeriesFields() {
+            const type = document.getElementById('cType').value;
+            const fields = document.getElementById('seriesFields');
+            fields.style.display = (type === 'series') ? 'flex' : 'none';
+        }
+
+        function saveContent() {
+            const type = document.getElementById('cType').value;
+            const title = document.getElementById('cTitle').value;
+            const image = document.getElementById('cImage').value;
+            const url = document.getElementById('cUrl').value;
+            
+            if(!title || !url) {
+                alert("Lütfen başlık ve video linkini girin!");
+                return;
+            }
+
+            const newItem = {
+                id: Date.now(),
+                type: type,
+                title: title,
+                image: image,
+                url: url
+            };
+
+            if (type === 'series') {
+                newItem.season = document.getElementById('cSeason').value || 1;
+                newItem.episode = document.getElementById('cEpisode').value || 1;
+            }
+
+            // Kaydet
+            let data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            data.push(newItem);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+
+            closeAdmin();
+            loadContent(); // Listeyi yenile
+        }
+
+        function resetData() {
+            if(confirm("Tüm veriler silinecek ve varsayılana dönecek?")) {
+                localStorage.removeItem(STORAGE_KEY);
+                location.reload();
+            }
+        }
+
+        // --- PLAYER FONKSİYONLARI ---
+        function openPlayer(url, title) {
+            const modal = document.getElementById('playerModal');
+            document.getElementById('videoFrame').src = url;
+            document.getElementById('playerTitle').innerText = title;
+            modal.style.display = 'flex';
+        }
+
+        function closePlayer() {
+            const modal = document.getElementById('playerModal');
+            document.getElementById('videoFrame').src = "";
+            modal.style.display = 'none';
+        }
+
+    </script>
+</body>
+</html>
