@@ -5262,29 +5262,8 @@ function language(){const sel=document.querySelector('.full-lang-select');if(!se
 function boot(){wrap();language();const sel=document.querySelector('.full-lang-select');if(sel&amp;&amp;!sel.__goalLang){sel.addEventListener('change',()=&gt;{localStorage.setItem('aiprov-lang',sel.value);setTimeout(language,0)});sel.__goalLang=true;}setTimeout(sync,200);setTimeout(language,250);}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
-&lt;/script&gt;&lt;style id=&quot;web-only-hardening-style&quot;&gt;
-/* Web-only caydırıcı katman: gerçek güvenlik sunucuda uygulanmalıdır. */
-@media print{html:before{content:'Bu uygulama yalnızca web üzerinden kullanılabilir.';display:block;padding:40px;font:700 22px system-ui;color:#111}body&gt;*{display:none!important}}
-body.web-only-blocked&gt;*{filter:blur(8px);pointer-events:none;user-select:none}body.web-only-blocked:after{content:'WEB-ONLY OTURUM\A Bu uygulama masaüstüne aktarım ve yazdırma için tasarlanmamıştır.';white-space:pre;text-align:center;position:fixed;z-index:2147483647;inset:35% 12% auto;padding:20px;border:1px solid rgba(0,229,255,.45);border-radius:14px;background:rgba(5,12,25,.96);color:#eaf7ff;font:800 15px/1.6 system-ui;box-shadow:0 0 35px rgba(0,229,255,.2)}
-&lt;/style&gt;&lt;script id=&quot;web-only-hardening-script&quot;&gt;
-(function(){
-'use strict';
-// Tarayıcı menüsü, işletim sistemi ekran görüntüsü ve DevTools tamamen site tarafından engellenemez.
-// Aşağıdaki katman yalnızca kopyalama/yazdırma/kolay indirme davranışlarını caydırır.
-const block=e=&gt;{e.preventDefault();e.stopPropagation();return false};
-document.addEventListener('contextmenu',block,{capture:true});
-document.addEventListener('copy',block,{capture:true});
-document.addEventListener('cut',block,{capture:true});
-document.addEventListener('dragstart',block,{capture:true});
-document.addEventListener('selectstart',e=&gt;{if(!e.target.closest('input,textarea,[contenteditable=&quot;true&quot;]'))block(e)},{capture:true});
-document.addEventListener('keydown',e=&gt;{const k=(e.key||'').toUpperCase();if(k==='F12'||(e.ctrlKey&amp;&amp;e.shiftKey&amp;&amp;['I','J','C'].includes(k))||(e.ctrlKey&amp;&amp;['U','S','P'].includes(k))||(e.metaKey&amp;&amp;['S','P','U'].includes(k)))block(e);},{capture:true});
-window.addEventListener('beforeprint',()=&gt;document.body.classList.add('web-only-blocked'));
-window.addEventListener('afterprint',()=&gt;document.body.classList.remove('web-only-blocked'));
-(function(){const t=160;setInterval(()=&gt;{const open=(outerWidth-innerWidth&gt;t)||(outerHeight-innerHeight&gt;t);document.body.classList.toggle('devtools-open',open);},1000)})();
-// Sunulan uygulamada indirilebilir manifest/service worker oluşturulmaz.
-for(const el of document.querySelectorAll('a[download],link[rel=&quot;manifest&quot;]'))el.removeAttribute('download');
-})();
-&lt;/script&gt;&lt;style id=&quot;remove-prediction-goal-kpi&quot;&gt;
+&lt;/script
+&lt;/style&gt;&lt;style id=&quot;remove-prediction-goal-kpi&quot;&gt;
 /* Tahmin Tablosu üst sağındaki üçüncü beklenen gol/gol aralığı KPI kutusu kaldırıldı. */
 .predtbl-live-kpis{grid-template-columns:repeat(2,minmax(132px,1fr))!important;min-width:280px!important}
 .predtbl-live-kpi:nth-child(3){display:none!important}
@@ -5359,7 +5338,7 @@ const old=AIPROV?.renderCornerAndPoisson;if(old&amp;&amp;!old.__seasonRec){const
 const oldFill=AIPROV?.fillAndAnalyze;if(oldFill&amp;&amp;!oldFill.__seasonRec){const f=function(...args){const r=oldFill.apply(this,args);setTimeout(render,160);return r};f.__seasonRec=true;AIPROV.fillAndAnalyze=f;}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',render,{once:true});else render();setTimeout(render,500);setTimeout(render,1200);
 })();
-&lt;/script&gt;&lt;footer class=&quot;aiprov-social-footer&quot; id=&quot;aiprov-credits&quot;&gt;&lt;span&gt;Yapımcı: &lt;strong&gt;Selçuk Pehlevan&lt;/strong&gt; · Tüm hakları saklıdır&lt;/span&gt;&lt;a aria-label=&quot;Instagram selcukpehlevan08&quot; href=&quot;https://instagram.com/selcukpehlevan08&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;&lt;svg viewbox=&quot;0 0 24 24&quot;&gt;&lt;rect height=&quot;18&quot; rx=&quot;5&quot; width=&quot;18&quot; x=&quot;3&quot; y=&quot;3&quot;&gt;&lt;/rect&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;4&quot;&gt;&lt;/circle&gt;&lt;circle cx=&quot;17.5&quot; cy=&quot;6.5&quot; r=&quot;1&quot;&gt;&lt;/circle&gt;&lt;/svg&gt;selcukpehlevan08&lt;/a&gt;&lt;a aria-label=&quot;Instagram aiproanaliz&quot; href=&quot;https://instagram.com/aiproanaliz&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;&lt;svg viewbox=&quot;0 0 24 24&quot;&gt;&lt;rect height=&quot;18&quot; rx=&quot;5&quot; width=&quot;18&quot; x=&quot;3&quot; y=&quot;3&quot;&gt;&lt;/rect&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;4&quot;&gt;&lt;/circle&gt;&lt;circle cx=&quot;17.5&quot; cy=&quot;6.5&quot; r=&quot;1&quot;&gt;&lt;/circle&gt;&lt;/svg&gt;aiproanaliz&lt;/a&gt;&lt;a aria-label=&quot;E-posta selcukpehlevan@gmail.com&quot; href=&quot;mailto:selcukpehlevan@gmail.com&quot;&gt;&lt;svg viewbox=&quot;0 0 24 24&quot;&gt;&lt;rect height=&quot;14&quot; rx=&quot;2&quot; width=&quot;18&quot; x=&quot;3&quot; y=&quot;5&quot;&gt;&lt;/rect&gt;&lt;path d=&quot;m4 7 8 6 8-6&quot;&gt;&lt;/path&gt;&lt;/svg&gt;selcukpehlevan@gmail.com&lt;/a&gt;&lt;/footer&gt;&lt;script id=&quot;aiprov-full-security-layer&quot;&gt;(()=&gt;{const stop=e=&gt;{e.preventDefault();e.stopPropagation();return false};document.addEventListener('contextmenu',stop,true);document.addEventListener('dragstart',stop,true);document.addEventListener('keydown',e=&gt;{const k=String(e.key||'').toLowerCase();if(e.key==='F12'||(e.ctrlKey&amp;&amp;e.shiftKey&amp;&amp;['i','j','c'].includes(k))||(e.ctrlKey&amp;&amp;['u','s','p'].includes(k))||(e.metaKey&amp;&amp;['u','s','p'].includes(k)))stop(e)},true);document.addEventListener('click',e=&gt;{const a=e.target.closest?.('a[download],button[data-download],button[data-save],.download-btn,.save-btn');if(a)stop(e)},true);window.downloadApp=()=&gt;false;window.saveApp=()=&gt;false;window.exportApp=()=&gt;false;})();&lt;/script&gt;&lt;&lt;/script&gt;&lt;script id=&quot;goaloo-team-name-normalizer&quot;&gt;(()=&gt;{
+&lt;/script&gt;&lt;footer class=&quot;aiprov-social-footer&quot; id=&quot;aiprov-credits&quot;&gt;&lt;span&gt;Yapımcı: &lt;strong&gt;Selçuk Pehlevan&lt;/strong&gt; · Tüm hakları saklıdır&lt;/span&gt;&lt;a aria-label=&quot;Instagram selcukpehlevan08&quot; href=&quot;https://instagram.com/selcukpehlevan08&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;&lt;svg viewbox=&quot;0 0 24 24&quot;&gt;&lt;rect height=&quot;18&quot; rx=&quot;5&quot; width=&quot;18&quot; x=&quot;3&quot; y=&quot;3&quot;&gt;&lt;/rect&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;4&quot;&gt;&lt;/circle&gt;&lt;circle cx=&quot;17.5&quot; cy=&quot;6.5&quot; r=&quot;1&quot;&gt;&lt;/circle&gt;&lt;/svg&gt;selcukpehlevan08&lt;/a&gt;&lt;a aria-label=&quot;Instagram aiproanaliz&quot; href=&quot;https://instagram.com/aiproanaliz&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;&lt;svg viewbox=&quot;0 0 24 24&quot;&gt;&lt;rect height=&quot;18&quot; rx=&quot;5&quot; width=&quot;18&quot; x=&quot;3&quot; y=&quot;3&quot;&gt;&lt;/rect&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;4&quot;&gt;&lt;/circle&gt;&lt;circle cx=&quot;17.5&quot; cy=&quot;6.5&quot; r=&quot;1&quot;&gt;&lt;/circle&gt;&lt;/svg&gt;aiproanaliz&lt;/a&gt;&lt;a aria-label=&quot;E-posta selcukpehlevan@gmail.com&quot; href=&quot;mailto:selcukpehlevan@gmail.com&quot;&gt;&lt;svg viewbox=&quot;0 0 24 24&quot;&gt;&lt;rect height=&quot;14&quot; rx=&quot;2&quot; width=&quot;18&quot; x=&quot;3&quot; y=&quot;5&quot;&gt;&lt;/rect&gt;&lt;path d=&quot;m4 7 8 6 8-6&quot;&gt;&lt;/path&gt;&lt;/svg&gt;selcukpehlevan@gmail.com&lt;/a&gt;&lt;/footer&gt;&lt;script id=&quot;goaloo-team-name-normalizer&quot;&gt;(()=&gt;{
   function cleanName(v){
     return String(v||'').replace(/\s+/g,' ').replace(/^[-–—:&gt;]+|[-–—:]+$/g,'').trim()
       .replace(/\s+(?:Live|H2H|Odds|Detail Analysis|Get APP.*)$/i,'').trim();
@@ -10533,17 +10512,12 @@ function language(){const sel=document.querySelector('.full-lang-select');if(!se
 function boot(){wrap();language();const sel=document.querySelector('.full-lang-select');if(sel&amp;&amp;!sel.__goalLang){sel.addEventListener('change',()=&gt;{localStorage.setItem('aiprov-lang',sel.value);setTimeout(language,0)});sel.__goalLang=true;}setTimeout(sync,200);setTimeout(language,250);}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
-&lt;/script&gt;&lt;style id=&quot;web-only-hardening-style&quot;&gt;
-/* Web-only caydırıcı katman: gerçek güvenlik sunucuda uygulanmalıdır. */
-@media print{html:before{content:'Bu uygulama yalnızca web üzerinden kullanılabilir.';display:block;padding:40px;font:700 22px system-ui;color:#111}body&gt;*{display:none!important}}
-body.web-only-blocked&gt;*{filter:blur(8px);pointer-events:none;user-select:none}body.web-only-blocked:after{content:'WEB-ONLY OTURUM\A Bu uygulama masaüstüne aktarım ve yazdırma için tasarlanmamıştır.';white-space:pre;text-align:center;position:fixed;z-index:2147483647;inset:35% 12% auto;padding:20px;border:1px solid rgba(0,229,255,.45);border-radius:14px;background:rgba(5,12,25,.96);color:#eaf7ff;font:800 15px/1.6 system-ui;box-shadow:0 0 35px rgba(0,229,255,.2)}
-&lt;/style&gt;&lt;script id=&quot;web-only-hardening-script&quot;&gt;
+&lt;/script&gt;&lt;&quot;&gt;
 (function(){
 'use strict';
 // Tarayıcı menüsü, işletim sistemi ekran görüntüsü ve DevTools tamamen site tarafından engellenemez.
 // Aşağıdaki katman yalnızca kopyalama/yazdırma/kolay indirme davranışlarını caydırır.
 const block=e=&gt;{e.preventDefault();e.stopPropagation();return false};
-document.addEventListener('contextmenu',block,{capture:true});
 document.addEventListener('copy',block,{capture:true});
 document.addEventListener('cut',block,{capture:true});
 document.addEventListener('dragstart',block,{capture:true});
@@ -10551,7 +10525,6 @@ document.addEventListener('selectstart',e=&gt;{if(!e.target.closest('input,texta
 document.addEventListener('keydown',e=&gt;{const k=(e.key||'').toUpperCase();if(k==='F12'||(e.ctrlKey&amp;&amp;e.shiftKey&amp;&amp;['I','J','C'].includes(k))||(e.ctrlKey&amp;&amp;['U','S','P'].includes(k))||(e.metaKey&amp;&amp;['S','P','U'].includes(k)))block(e);},{capture:true});
 window.addEventListener('beforeprint',()=&gt;document.body.classList.add('web-only-blocked'));
 window.addEventListener('afterprint',()=&gt;document.body.classList.remove('web-only-blocked'));
-(function(){const t=160;setInterval(()=&gt;{const open=(outerWidth-innerWidth&gt;t)||(outerHeight-innerHeight&gt;t);document.body.classList.toggle('devtools-open',open);},1000)})();
 // Sunulan uygulamada indirilebilir manifest/service worker oluşturulmaz.
 for(const el of document.querySelectorAll('a[download],link[rel=&quot;manifest&quot;]'))el.removeAttribute('download');
 })();
@@ -10630,7 +10603,7 @@ const old=AIPROV?.renderCornerAndPoisson;if(old&amp;&amp;!old.__seasonRec){const
 const oldFill=AIPROV?.fillAndAnalyze;if(oldFill&amp;&amp;!oldFill.__seasonRec){const f=function(...args){const r=oldFill.apply(this,args);setTimeout(render,160);return r};f.__seasonRec=true;AIPROV.fillAndAnalyze=f;}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',render,{once:true});else render();setTimeout(render,500);setTimeout(render,1200);
 })();
-&lt;/script&gt;&lt;footer class=&quot;aiprov-social-footer&quot; id=&quot;aiprov-credits&quot;&gt;&lt;span&gt;Yapımcı: &lt;strong&gt;Selçuk Pehlevan&lt;/strong&gt; · Tüm hakları saklıdır&lt;/span&gt;&lt;a aria-label=&quot;Instagram selcukpehlevan08&quot; href=&quot;https://instagram.com/selcukpehlevan08&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;&lt;svg viewbox=&quot;0 0 24 24&quot;&gt;&lt;rect height=&quot;18&quot; rx=&quot;5&quot; width=&quot;18&quot; x=&quot;3&quot; y=&quot;3&quot;&gt;&lt;/rect&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;4&quot;&gt;&lt;/circle&gt;&lt;circle cx=&quot;17.5&quot; cy=&quot;6.5&quot; r=&quot;1&quot;&gt;&lt;/circle&gt;&lt;/svg&gt;selcukpehlevan08&lt;/a&gt;&lt;a aria-label=&quot;Instagram aiproanaliz&quot; href=&quot;https://instagram.com/aiproanaliz&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;&lt;svg viewbox=&quot;0 0 24 24&quot;&gt;&lt;rect height=&quot;18&quot; rx=&quot;5&quot; width=&quot;18&quot; x=&quot;3&quot; y=&quot;3&quot;&gt;&lt;/rect&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;4&quot;&gt;&lt;/circle&gt;&lt;circle cx=&quot;17.5&quot; cy=&quot;6.5&quot; r=&quot;1&quot;&gt;&lt;/circle&gt;&lt;/svg&gt;aiproanaliz&lt;/a&gt;&lt;a aria-label=&quot;E-posta selcukpehlevan@gmail.com&quot; href=&quot;mailto:selcukpehlevan@gmail.com&quot;&gt;&lt;svg viewbox=&quot;0 0 24 24&quot;&gt;&lt;rect height=&quot;14&quot; rx=&quot;2&quot; width=&quot;18&quot; x=&quot;3&quot; y=&quot;5&quot;&gt;&lt;/rect&gt;&lt;path d=&quot;m4 7 8 6 8-6&quot;&gt;&lt;/path&gt;&lt;/svg&gt;selcukpehlevan@gmail.com&lt;/a&gt;&lt;/footer&gt;&lt;script id=&quot;aiprov-full-security-layer&quot;&gt;(()=&gt;{const stop=e=&gt;{e.preventDefault();e.stopPropagation();return false};document.addEventListener('contextmenu',stop,true);document.addEventListener('dragstart',stop,true);document.addEventListener('keydown',e=&gt;{const k=String(e.key||'').toLowerCase();if(e.key==='F12'||(e.ctrlKey&amp;&amp;e.shiftKey&amp;&amp;['i','j','c'].includes(k))||(e.ctrlKey&amp;&amp;['u','s','p'].includes(k))||(e.metaKey&amp;&amp;['u','s','p'].includes(k)))stop(e)},true);document.addEventListener('click',e=&gt;{const a=e.target.closest?.('a[download],button[data-download],button[data-save],.download-btn,.save-btn');if(a)stop(e)},true);window.downloadApp=()=&gt;false;window.saveApp=()=&gt;false;window.exportApp=()=&gt;false;})();&lt;/script&gt;&lt;&lt;/script&gt;&lt;script id=&quot;goaloo-team-name-normalizer&quot;&gt;(()=&gt;{
+&lt;/script&gt;&lt;footer class=&quot;aiprov-social-footer&quot; id=&quot;aiprov-credits&quot;&gt;&lt;span&gt;Yapımcı: &lt;strong&gt;Selçuk Pehlevan&lt;/strong&gt; · Tüm hakları saklıdır&lt;/span&gt;&lt;a aria-label=&quot;Instagram selcukpehlevan08&quot; href=&quot;https://instagram.com/selcukpehlevan08&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;&lt;svg viewbox=&quot;0 0 24 24&quot;&gt;&lt;rect height=&quot;18&quot; rx=&quot;5&quot; width=&quot;18&quot; x=&quot;3&quot; y=&quot;3&quot;&gt;&lt;/rect&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;4&quot;&gt;&lt;/circle&gt;&lt;circle cx=&quot;17.5&quot; cy=&quot;6.5&quot; r=&quot;1&quot;&gt;&lt;/circle&gt;&lt;/svg&gt;selcukpehlevan08&lt;/a&gt;&lt;a aria-label=&quot;Instagram aiproanaliz&quot; href=&quot;https://instagram.com/aiproanaliz&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;&lt;svg viewbox=&quot;0 0 24 24&quot;&gt;&lt;rect height=&quot;18&quot; rx=&quot;5&quot; width=&quot;18&quot; x=&quot;3&quot; y=&quot;3&quot;&gt;&lt;/rect&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;4&quot;&gt;&lt;/circle&gt;&lt;circle cx=&quot;17.5&quot; cy=&quot;6.5&quot; r=&quot;1&quot;&gt;&lt;/circle&gt;&lt;/svg&gt;aiproanaliz&lt;/a&gt;&lt;a aria-label=&quot;E-posta selcukpehlevan@gmail.com&quot; href=&quot;mailto:selcukpehlevan@gmail.com&quot;&gt;&lt;svg viewbox=&quot;0 0 24 24&quot;&gt;&lt;rect height=&quot;14&quot; rx=&quot;2&quot; width=&quot;18&quot; x=&quot;3&quot; y=&quot;5&quot;&gt;&lt;/rect&gt;&lt;path d=&quot;m4 7 8 6 8-6&quot;&gt;&lt;/path&gt;&lt;/svg&gt;selcukpehlevan@gmail.com&lt;/a&gt;&lt;/footer&gt;&lt;script id=&quot;goaloo-team-name-normalizer&quot;&gt;(()=&gt;{
   function cleanName(v){
     return String(v||'').replace(/\s+/g,' ').replace(/^[-–—:&gt;]+|[-–—:]+$/g,'').trim()
       .replace(/\s+(?:Live|H2H|Odds|Detail Analysis|Get APP.*)$/i,'').trim();
@@ -15805,17 +15778,16 @@ function language(){const sel=document.querySelector('.full-lang-select');if(!se
 function boot(){wrap();language();const sel=document.querySelector('.full-lang-select');if(sel&amp;&amp;!sel.__goalLang){sel.addEventListener('change',()=&gt;{localStorage.setItem('aiprov-lang',sel.value);setTimeout(language,0)});sel.__goalLang=true;}setTimeout(sync,200);setTimeout(language,250);}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
-&lt;/script&gt;&lt;style id=&quot;web-only-hardening-style&quot;&gt;
+&lt;/script&gt;&lt;&quot;&gt;
 /* Web-only caydırıcı katman: gerçek güvenlik sunucuda uygulanmalıdır. */
 @media print{html:before{content:'Bu uygulama yalnızca web üzerinden kullanılabilir.';display:block;padding:40px;font:700 22px system-ui;color:#111}body&gt;*{display:none!important}}
 body.web-only-blocked&gt;*{filter:blur(8px);pointer-events:none;user-select:none}body.web-only-blocked:after{content:'WEB-ONLY OTURUM\A Bu uygulama masaüstüne aktarım ve yazdırma için tasarlanmamıştır.';white-space:pre;text-align:center;position:fixed;z-index:2147483647;inset:35% 12% auto;padding:20px;border:1px solid rgba(0,229,255,.45);border-radius:14px;background:rgba(5,12,25,.96);color:#eaf7ff;font:800 15px/1.6 system-ui;box-shadow:0 0 35px rgba(0,229,255,.2)}
-&lt;/style&gt;&lt;script id=&quot;web-only-hardening-script&quot;&gt;
+&lt;/style&gt;&lt;&quot;&gt;
 (function(){
 'use strict';
 // Tarayıcı menüsü, işletim sistemi ekran görüntüsü ve DevTools tamamen site tarafından engellenemez.
 // Aşağıdaki katman yalnızca kopyalama/yazdırma/kolay indirme davranışlarını caydırır.
 const block=e=&gt;{e.preventDefault();e.stopPropagation();return false};
-document.addEventListener('contextmenu',block,{capture:true});
 document.addEventListener('copy',block,{capture:true});
 document.addEventListener('cut',block,{capture:true});
 document.addEventListener('dragstart',block,{capture:true});
@@ -15823,7 +15795,6 @@ document.addEventListener('selectstart',e=&gt;{if(!e.target.closest('input,texta
 document.addEventListener('keydown',e=&gt;{const k=(e.key||'').toUpperCase();if(k==='F12'||(e.ctrlKey&amp;&amp;e.shiftKey&amp;&amp;['I','J','C'].includes(k))||(e.ctrlKey&amp;&amp;['U','S','P'].includes(k))||(e.metaKey&amp;&amp;['S','P','U'].includes(k)))block(e);},{capture:true});
 window.addEventListener('beforeprint',()=&gt;document.body.classList.add('web-only-blocked'));
 window.addEventListener('afterprint',()=&gt;document.body.classList.remove('web-only-blocked'));
-(function(){const t=160;setInterval(()=&gt;{const open=(outerWidth-innerWidth&gt;t)||(outerHeight-innerHeight&gt;t);document.body.classList.toggle('devtools-open',open);},1000)})();
 // Sunulan uygulamada indirilebilir manifest/service worker oluşturulmaz.
 for(const el of document.querySelectorAll('a[download],link[rel=&quot;manifest&quot;]'))el.removeAttribute('download');
 })();
@@ -15902,7 +15873,7 @@ const old=AIPROV?.renderCornerAndPoisson;if(old&amp;&amp;!old.__seasonRec){const
 const oldFill=AIPROV?.fillAndAnalyze;if(oldFill&amp;&amp;!oldFill.__seasonRec){const f=function(...args){const r=oldFill.apply(this,args);setTimeout(render,160);return r};f.__seasonRec=true;AIPROV.fillAndAnalyze=f;}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',render,{once:true});else render();setTimeout(render,500);setTimeout(render,1200);
 })();
-&lt;/script&gt;&lt;footer class=&quot;aiprov-social-footer&quot; id=&quot;aiprov-credits&quot;&gt;&lt;span&gt;Yapımcı: &lt;strong&gt;Selçuk Pehlevan&lt;/strong&gt; · Tüm hakları saklıdır&lt;/span&gt;&lt;a aria-label=&quot;Instagram selcukpehlevan08&quot; href=&quot;https://instagram.com/selcukpehlevan08&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;&lt;svg viewbox=&quot;0 0 24 24&quot;&gt;&lt;rect height=&quot;18&quot; rx=&quot;5&quot; width=&quot;18&quot; x=&quot;3&quot; y=&quot;3&quot;&gt;&lt;/rect&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;4&quot;&gt;&lt;/circle&gt;&lt;circle cx=&quot;17.5&quot; cy=&quot;6.5&quot; r=&quot;1&quot;&gt;&lt;/circle&gt;&lt;/svg&gt;selcukpehlevan08&lt;/a&gt;&lt;a aria-label=&quot;Instagram aiproanaliz&quot; href=&quot;https://instagram.com/aiproanaliz&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;&lt;svg viewbox=&quot;0 0 24 24&quot;&gt;&lt;rect height=&quot;18&quot; rx=&quot;5&quot; width=&quot;18&quot; x=&quot;3&quot; y=&quot;3&quot;&gt;&lt;/rect&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;4&quot;&gt;&lt;/circle&gt;&lt;circle cx=&quot;17.5&quot; cy=&quot;6.5&quot; r=&quot;1&quot;&gt;&lt;/circle&gt;&lt;/svg&gt;aiproanaliz&lt;/a&gt;&lt;a aria-label=&quot;E-posta selcukpehlevan@gmail.com&quot; href=&quot;mailto:selcukpehlevan@gmail.com&quot;&gt;&lt;svg viewbox=&quot;0 0 24 24&quot;&gt;&lt;rect height=&quot;14&quot; rx=&quot;2&quot; width=&quot;18&quot; x=&quot;3&quot; y=&quot;5&quot;&gt;&lt;/rect&gt;&lt;path d=&quot;m4 7 8 6 8-6&quot;&gt;&lt;/path&gt;&lt;/svg&gt;selcukpehlevan@gmail.com&lt;/a&gt;&lt;/footer&gt;&lt;script id=&quot;aiprov-full-security-layer&quot;&gt;(()=&gt;{const stop=e=&gt;{e.preventDefault();e.stopPropagation();return false};document.addEventListener('contextmenu',stop,true);document.addEventListener('dragstart',stop,true);document.addEventListener('keydown',e=&gt;{const k=String(e.key||'').toLowerCase();if(e.key==='F12'||(e.ctrlKey&amp;&amp;e.shiftKey&amp;&amp;['i','j','c'].includes(k))||(e.ctrlKey&amp;&amp;['u','s','p'].includes(k))||(e.metaKey&amp;&amp;['u','s','p'].includes(k)))stop(e)},true);document.addEventListener('click',e=&gt;{const a=e.target.closest?.('a[download],button[data-download],button[data-save],.download-btn,.save-btn');if(a)stop(e)},true);window.downloadApp=()=&gt;false;window.saveApp=()=&gt;false;window.exportApp=()=&gt;false;})();&lt;/script&gt;&lt;&lt;/script&gt;&lt;script id=&quot;goaloo-team-name-normalizer&quot;&gt;(()=&gt;{
+&lt;/script&gt;&lt;footer class=&quot;aiprov-social-footer&quot; id=&quot;aiprov-credits&quot;&gt;&lt;span&gt;Yapımcı: &lt;strong&gt;Selçuk Pehlevan&lt;/strong&gt; · Tüm hakları saklıdır&lt;/span&gt;&lt;a aria-label=&quot;Instagram selcukpehlevan08&quot; href=&quot;https://instagram.com/selcukpehlevan08&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;&lt;svg viewbox=&quot;0 0 24 24&quot;&gt;&lt;rect height=&quot;18&quot; rx=&quot;5&quot; width=&quot;18&quot; x=&quot;3&quot; y=&quot;3&quot;&gt;&lt;/rect&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;4&quot;&gt;&lt;/circle&gt;&lt;circle cx=&quot;17.5&quot; cy=&quot;6.5&quot; r=&quot;1&quot;&gt;&lt;/circle&gt;&lt;/svg&gt;selcukpehlevan08&lt;/a&gt;&lt;a aria-label=&quot;Instagram aiproanaliz&quot; href=&quot;https://instagram.com/aiproanaliz&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;&lt;svg viewbox=&quot;0 0 24 24&quot;&gt;&lt;rect height=&quot;18&quot; rx=&quot;5&quot; width=&quot;18&quot; x=&quot;3&quot; y=&quot;3&quot;&gt;&lt;/rect&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;4&quot;&gt;&lt;/circle&gt;&lt;circle cx=&quot;17.5&quot; cy=&quot;6.5&quot; r=&quot;1&quot;&gt;&lt;/circle&gt;&lt;/svg&gt;aiproanaliz&lt;/a&gt;&lt;a aria-label=&quot;E-posta selcukpehlevan@gmail.com&quot; href=&quot;mailto:selcukpehlevan@gmail.com&quot;&gt;&lt;svg viewbox=&quot;0 0 24 24&quot;&gt;&lt;rect height=&quot;14&quot; rx=&quot;2&quot; width=&quot;18&quot; x=&quot;3&quot; y=&quot;5&quot;&gt;&lt;/rect&gt;&lt;path d=&quot;m4 7 8 6 8-6&quot;&gt;&lt;/path&gt;&lt;/svg&gt;selcukpehlevan@gmail.com&lt;/a&gt;&lt;/footer&gt;&lt;script id=&quot;goaloo-team-name-normalizer&quot;&gt;(()=&gt;{
   function cleanName(v){
     return String(v||'').replace(/\s+/g,' ').replace(/^[-–—:&gt;]+|[-–—:]+$/g,'').trim()
       .replace(/\s+(?:Live|H2H|Odds|Detail Analysis|Get APP.*)$/i,'').trim();
@@ -15956,95 +15927,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   URL.revokeObjectURL(url);
 }
 </script>
-<script>
-(function(){
-  // Sağ tık engeli
-  document.addEventListener('contextmenu', function(e){ e.preventDefault(); e.stopPropagation(); }, true);
 
-  // Klavye kısayolları engeli
-  document.addEventListener('keydown', function(e){
-    var k = (e.key || '').toUpperCase();
-    if (e.key === 'F12' ||
-        (e.ctrlKey && e.shiftKey && /^[IJKCM]$/.test(k)) ||
-        (e.ctrlKey && /^[USPA]$/.test(k)) ||
-        (e.metaKey && e.altKey && /^[IJKC]$/.test(k))) {
-      e.preventDefault();
-      e.stopPropagation();
-      return false;
-    }
-  }, true);
-
-  // Şifre/kullanıcı alanı koruması
-  var protect = function(e){
-    var t = e.target;
-    if (!t) return;
-    var type = (t.type || '').toLowerCase();
-    var id = t.id || '';
-    if (type === 'password' || id === 'loginPass' || id === 'loginUser') {
-      if (['copy','cut','paste','dragstart','drop','drag','selectstart'].indexOf(e.type) >= 0) {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-      }
-    }
-  };
-  ['copy','cut','paste','dragstart','drop','drag','selectstart'].forEach(function(ev){
-    document.addEventListener(ev, protect, true);
-  });
-
-  // DevTools algılama (uyarı — uygulamayı BOZMAZ)
-  var warned = false;
-  function showWarn(msg){
-    if (warned) return;
-    warned = true;
-    var d = document.createElement('div');
-    d.id = '__devt_warn__';
-    d.style.cssText = 'position:fixed!important;top:0!important;left:0!important;right:0!important;padding:14px!important;background:#ff1744!important;color:#fff!important;text-align:center!important;z-index:2147483647!important;font:bold 14px sans-serif!important;box-shadow:0 4px 12px rgba(0,0,0,.4)';
-    d.textContent = msg;
-    (document.body || document.documentElement).appendChild(d);
-  }
-  function hideWarn(){
-    warned = false;
-    var d = document.getElementById('__devt_warn__');
-    if (d && d.parentNode) d.parentNode.removeChild(d);
-  }
-  setInterval(function(){
-    try {
-      var w = (window.outerWidth || 0) - (window.innerWidth || 0);
-      var h = (window.outerHeight || 0) - (window.innerHeight || 0);
-      if (w > 160 || h > 160) {
-        showWarn('⚠ Geliştirici araçları algılandı — erişim engelleniyor');
-      } else {
-        hideWarn();
-      }
-    } catch(_) {}
-  }, 1500);
-})();
-function downloadApp(){
-  const blob = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'AIPROV_Futbol_Analiz.html';
-  a.click();
-  URL.revokeObjectURL(url);
-}
-</script>
-<script id="aiprov-full-security-layer">
-(() => {
-  const stop = (event) => { event.preventDefault(); event.stopPropagation(); return false; };
-  const inspectionShortcut = (event) => {
-    const key = String(event.key || "").toLowerCase();
-    return event.key === "F12" || (event.ctrlKey && event.shiftKey && ["i", "j", "c"].includes(key)) || (event.ctrlKey && ["u", "s", "p"].includes(key)) || (event.metaKey && ["u", "s", "p"].includes(key));
-  };
-  document.addEventListener("contextmenu", stop, true);
-  document.addEventListener("dragstart", stop, true);
-  document.addEventListener("selectstart", (event) => { if (!/INPUT|TEXTAREA|SELECT/.test(event.target?.tagName || "")) stop(event); }, true);
-  document.addEventListener("keydown", (event) => { if (inspectionShortcut(event)) stop(event); }, true);
-  document.addEventListener("click", (event) => { const action = event.target.closest?.("a[download],button[data-download],button[data-save],.download-btn,.save-btn"); if (action) stop(event); }, true);
-  window.downloadApp = () => false; window.saveApp = () => false; window.exportApp = () => false;
-})();
-</script><script id="three-analysis-sessions-script">(()=>{const root=document.getElementById('football-analysis-sessions');if(!root)return;const tabs=[...root.querySelectorAll('.fas-tab')],frames=[...root.querySelectorAll('.fas-frame')];let unlocked=false;function loggedIn(){try{return true}catch(e){return false}}function refreshAuth(){const ok=loggedIn();root.classList.toggle('auth-pending',!ok);if(ok!==unlocked){unlocked=ok;tabs.forEach((t,i)=>{if(i>0)t.disabled=!ok;t.setAttribute('aria-disabled',i>0&&!ok?'true':'false')});if(!ok){tabs.slice(1).forEach(t=>t.title='Önce tek kullanıcı girişi tamamlanmalıdır');}}}tabs.forEach((tab,i)=>tab.addEventListener('click',()=>{if(tab.disabled)return;tabs.forEach((x,j)=>{x.classList.toggle('active',j===i);x.setAttribute('aria-selected',j===i?'true':'false')});frames.forEach((x,j)=>x.classList.toggle('active',j===i));}));tabs.forEach((x,i)=>{x.setAttribute('aria-selected',i?'false':'true');if(i>0)x.disabled=true});refreshAuth();setInterval(refreshAuth,250);})();</script><script id="basketball-frame-router">
+<script id="three-analysis-sessions-script">(()=>{const root=document.getElementById('football-analysis-sessions');if(!root)return;const tabs=[...root.querySelectorAll('.fas-tab')],frames=[...root.querySelectorAll('.fas-frame')];let unlocked=false;function loggedIn(){try{return true}catch(e){return false}}function refreshAuth(){const ok=loggedIn();root.classList.toggle('auth-pending',!ok);if(ok!==unlocked){unlocked=ok;tabs.forEach((t,i)=>{if(i>0)t.disabled=!ok;t.setAttribute('aria-disabled',i>0&&!ok?'true':'false')});if(!ok){tabs.slice(1).forEach(t=>t.title='Önce tek kullanıcı girişi tamamlanmalıdır');}}}tabs.forEach((tab,i)=>tab.addEventListener('click',()=>{if(tab.disabled)return;tabs.forEach((x,j)=>{x.classList.toggle('active',j===i);x.setAttribute('aria-selected',j===i?'true':'false')});frames.forEach((x,j)=>x.classList.toggle('active',j===i));}));tabs.forEach((x,i)=>{x.setAttribute('aria-selected',i?'false':'true');if(i>0)x.disabled=true});refreshAuth();setInterval(refreshAuth,250);})();</script><script id="basketball-frame-router">
 (() => {
   const legacyShowScreen = window.showScreen;
   const basketballScreen = document.getElementById("screen-basketbol");
@@ -16103,25 +15987,7 @@ function downloadApp(){
   .screen{overflow:auto}.screen iframe{min-width:0;min-height:100dvh}.back-btn{top:10px;left:10px;padding:8px 11px;font-size:11px}.back-btn-futbol{top:58px}
   .football-analysis-sessions{min-width:0!important;padding:10px!important}.fas-tabs,.futbol-tabbar{max-width:calc(100vw - 20px);overflow-x:auto}.fas-tab{flex:0 0 auto}
 }
-</style><script id="aiprov-sport-guard">
-(() => {
-  const inspectionShortcut = (event) => {
-    const key = String(event.key || "").toLowerCase();
-    return event.key === "F12" || ((event.ctrlKey || event.metaKey) && event.shiftKey && ["i", "j", "c"].includes(key)) || ((event.ctrlKey || event.metaKey) && ["u"].includes(key));
-  };
-  const applyGuard = (doc) => {
-    if (!doc || doc.documentElement?.dataset.aiprovGuard === "on") return;
-    doc.documentElement.dataset.aiprovGuard = "on";
-    doc.addEventListener("contextmenu", (event) => event.preventDefault(), true);
-    doc.addEventListener("keydown", (event) => { if (inspectionShortcut(event)) { event.preventDefault(); event.stopPropagation(); } }, true);
-    doc.addEventListener("selectstart", (event) => { if (["INPUT", "TEXTAREA", "SELECT"].includes(event.target?.tagName)) return; event.preventDefault(); }, true);
-  };
-  const wireFrame = (frame) => { frame?.addEventListener("load", () => { try { applyGuard(frame.contentDocument); } catch { /* Çapraz kaynaklı çerçeve kendi davranışını yönetir. */ } }); };
-  applyGuard(document);
-  document.querySelectorAll("iframe").forEach(wireFrame);
-  new MutationObserver((records) => records.forEach((record) => record.addedNodes.forEach((node) => { if (node.nodeType === 1 && node.matches?.("iframe")) wireFrame(node); node.querySelectorAll?.("iframe").forEach(wireFrame); }))).observe(document.documentElement, { childList: true, subtree: true });
-})();
-</script>
+
 <script id="football-active-tab-paste-router">
 (() => {
   const root = document.getElementById('football-analysis-sessions');
